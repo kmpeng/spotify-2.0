@@ -1,25 +1,19 @@
 import { StyleSheet, Image, Text, FlatList, View } from "react-native";
 import { Themes, Images } from "../assets/Themes";
-import { millisToMinutesAndSeconds } from "../utils";
-import { Song } from "./song.js"
+import Song from "./song.js"
 
 export default function SongList({tracks}) {
-  const renderSong = ({ item }) => (
-    <Song
+  const renderSong = ({item, index}) => (
+    <Song 
+      index={index+1}
+      imageURL={item.album.images[0].url}
       songTitle={item.name}
-    />
+      songArtists={item.artists}
+      albumName={item.album.name}
+      duration={item.duration_ms}
+      />
   );
-  // for (let track of tracks.tracks) {
-  //   console.log("Album image url: " + track.album.images[0].url)
-  //   console.log("Song title: " + track.name)
-  //   let artists = ""
-  //   for (let artist of track.artists) {
-  //     artists += artist.name + ", "
-  //   }
-  //   console.log("Song artists: " + artists)
-  //   console.log("Album name: " + track.album.name)
-  //   console.log("Duration: " + millisToMinutesAndSeconds(track.duration_ms))
-  // }
+
   return (
     <View>
       <View style={styles.topBar}>
@@ -28,7 +22,8 @@ export default function SongList({tracks}) {
       </View>
       <FlatList
         data={tracks}
-        renderItem={({item}) => renderSong(item)}
+        renderItem={(item, index) => renderSong(item, index)}
+        keyExtractor={(item) => item.id}
       />
     </View>
   );
@@ -37,6 +32,8 @@ export default function SongList({tracks}) {
 const styles = StyleSheet.create({
   topBar: {
     flexDirection: "row",
+    justifyContent: "center",
+    paddingBottom: 10
   },
   spotifyLogo: {
     width: undefined,
@@ -49,5 +46,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 24,
     paddingLeft: 7
-  },
+  }
 });
