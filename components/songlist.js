@@ -1,8 +1,8 @@
-import { StyleSheet, Image, Text, FlatList, View } from "react-native";
+import { StyleSheet, Image, Text, FlatList, View, SafeAreaView } from "react-native";
 import { Themes, Images } from "../assets/Themes";
 import Song from "./song.js"
 
-export default function SongList({tracks}) {
+export default function SongList({ navigation, tracks }) {
   const renderSong = ({item}) => (
     <Song
       imageURL={item.album.images[0].url}
@@ -14,7 +14,7 @@ export default function SongList({tracks}) {
   );
 
   return (
-    <View>
+    <SafeAreaView style={styles.container}>
       <View style={styles.topBar}>
         <Image source={Images.spotify} style={styles.spotifyLogo}/>
         <Text style={styles.topText}>My Top Tracks</Text>
@@ -24,11 +24,17 @@ export default function SongList({tracks}) {
         renderItem={(item) => renderSong(item)}
         keyExtractor={(item) => item.id}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Themes.colors.background,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
   topBar: {
     flexDirection: "row",
     justifyContent: "center",

@@ -1,21 +1,29 @@
-import { StyleSheet, Image, Text, Pressable } from "react-native";
+import { StyleSheet, Image, Text, Pressable, SafeAreaView } from "react-native";
 import { Themes, Images } from "../assets/Themes";
 
-export default function SpotifyAuthButton({getSpotifyAuth}) {
+export default function SpotifyAuthButton({ navigation, getSpotifyAuth }) {
   return (
-    <Pressable onPress={getSpotifyAuth} style={ ({pressed}) => [
-      {
-        backgroundColor: pressed ? "#158c3f" : Themes.colors.spotify,
-      },
-      styles.authButton,
-    ] }>
-      <Image source={ Images.spotify } style={ styles.spotifyLogo }/>
-      <Text style={ styles.authText }>CONNECT WITH SPOTIFY</Text>
-    </Pressable>
+    <SafeAreaView style={styles.container}>
+      <Pressable onPress={getSpotifyAuth} style={ ({pressed}) => [
+        {
+          backgroundColor: pressed ? "#158c3f" : Themes.colors.spotify,
+        },
+        styles.authButton,
+      ] }>
+        <Image source={ Images.spotify } style={ styles.spotifyLogo }/>
+        <Text style={ styles.authText }>CONNECT WITH SPOTIFY</Text>
+      </Pressable>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: Themes.colors.background,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
   authButton: {
     flexDirection: "row",
     padding: 10,
