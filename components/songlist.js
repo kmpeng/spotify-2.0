@@ -2,14 +2,16 @@ import { StyleSheet, Image, Text, FlatList, View, SafeAreaView } from "react-nat
 import { Themes, Images } from "../assets/Themes";
 import Song from "./song.js"
 
-export default function SongList({ navigation, tracks }) {
-  const renderSong = ({item}) => (
+export default function SongList({ tracks }) {
+  const renderSong = ({ item }) => (
     <Song
       imageURL={item.album.images[0].url}
       songTitle={item.name}
       songArtists={item.artists}
       albumName={item.album.name}
       duration={item.duration_ms}
+      externalURL={item.external_urls.spotify}
+      previewURL={item.preview_url}
       />
   );
 

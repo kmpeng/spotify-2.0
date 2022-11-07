@@ -1,7 +1,7 @@
 import { StyleSheet, Image, Text, Pressable, SafeAreaView } from "react-native";
 import { Themes, Images } from "../assets/Themes";
 
-export default function SpotifyAuthButton({ navigation, getSpotifyAuth }) {
+export default function SpotifyAuthButton({ getSpotifyAuth }) {
   return (
     <SafeAreaView style={styles.container}>
       <Pressable onPress={getSpotifyAuth} style={ ({pressed}) => [

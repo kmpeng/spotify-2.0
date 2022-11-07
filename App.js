@@ -1,7 +1,6 @@
-import { StyleSheet, SafeAreaView, View } from "react-native";
 import { useSpotifyAuth } from "./utils";
 import { Themes } from "./assets/Themes";
-import { SpotifyAuthButton, SongList } from "./components";
+import { SpotifyAuthButton, SongList, SongDetails, SongPreview } from "./components";
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -12,23 +11,27 @@ export default function App() {
   const { token, tracks, getSpotifyAuth } = useSpotifyAuth();
 
   let contentDisplayed = token ? <SongList tracks={tracks}/> : <SpotifyAuthButton getSpotifyAuth={getSpotifyAuth}/>
-  // let contentDisplayed = token ? <SongList {...props} tracks={tracks}/> : <SpotifyAuthButton {...props} getSpotifyAuth={getSpotifyAuth}/>
+  const navTheme = {
+    dark: true,
+    colors: {
+      primary: Themes.colors.spotify,
+      background: Themes.colors.background,
+      card: Themes.colors.background,
+      text: Themes.colors.white,
+      border: Themes.colors.background,
+      notification: Themes.colors.spotify
+    }
+  };
+
   return (
-       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Main" options={{headerShown: false}}>
-            {() => contentDisplayed}
-          </Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
+    <NavigationContainer theme={navTheme}>
+      <Stack.Navigator screenOptions={{headerBackTitle: "Back"}}>
+        <Stack.Screen name="Main" options={{headerShown: false}}>
+          {() => contentDisplayed}
+        </Stack.Screen>
+        <Stack.Screen name="Details" component={SongDetails} options={{title: 'Song details'}} />
+        <Stack.Screen name="Preview" component={SongPreview} options={{title: 'Song preview'}}/>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Themes.colors.background,
-    justifyContent: "center",
-    alignItems: "center",
-    flex: 1,
-  },
-});

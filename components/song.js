@@ -2,8 +2,10 @@ import { View, StyleSheet, Image, Text, Pressable } from "react-native";
 import { Themes } from "../assets/Themes";
 import { millisToMinutesAndSeconds } from "../utils";
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Song({ imageURL, songTitle, songArtists, albumName,  duration}) {
+
+export default function Song({ imageURL, songTitle, songArtists, albumName, duration, externalURL, previewURL }) {
   let artists = ""
   for (let [i, artist] of songArtists.entries()) {
     if (i !== 0) {
@@ -11,22 +13,24 @@ export default function Song({ imageURL, songTitle, songArtists, albumName,  dur
     }
     artists += artist.name
   };
-
   duration = millisToMinutesAndSeconds(duration);
+  const navigation = useNavigation();
 
   return (
-    <View style={styles.songList}>
-      <Pressable style={styles.play}>
-        <Ionicons name="md-play-circle" size={22} color={Themes.colors.spotify} />
-      </Pressable>
-      <Image style={styles.albumCover} source={{uri: imageURL}}/>
-      <View style={styles.titleArtists}>
-        <Text numberOfLines={1} style={styles.songTitle}>{songTitle}</Text>
-        <Text numberOfLines={1} style={styles.artists}>{artists}</Text>
+    <Pressable onPress={() => navigation.navigate("Details", { externalURL: externalURL })}>
+      <View style={styles.songList}>
+        <Pressable style={styles.play} onPress={() => navigation.navigate("Preview", { previewURL: previewURL })}>
+          <Ionicons name="md-play-circle" size={22} color={Themes.colors.spotify} />
+        </Pressable>
+        <Image style={styles.albumCover} source={{uri: imageURL}}/>
+        <View style={styles.titleArtists}>
+          <Text numberOfLines={1} style={styles.songTitle}>{songTitle}</Text>
+          <Text numberOfLines={1} style={styles.artists}>{artists}</Text>
+        </View>
+        <Text numberOfLines={1} style={styles.albumName}>{albumName}</Text>
+        <Text style={styles.duration}>{duration}</Text>
       </View>
-      <Text numberOfLines={1} style={styles.albumName}>{albumName}</Text>
-      <Text style={styles.duration}>{duration}</Text>
-    </View>
+    </Pressable>
   );
 }
 
