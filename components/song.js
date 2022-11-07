@@ -1,8 +1,9 @@
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Image, Text, Pressable } from "react-native";
 import { Themes } from "../assets/Themes";
 import { millisToMinutesAndSeconds } from "../utils";
+import { Ionicons } from '@expo/vector-icons';
 
-export default function Song({ index, imageURL, songTitle, songArtists, albumName,  duration}) {
+export default function Song({ imageURL, songTitle, songArtists, albumName,  duration}) {
   let artists = ""
   for (let [i, artist] of songArtists.entries()) {
     if (i !== 0) {
@@ -15,7 +16,9 @@ export default function Song({ index, imageURL, songTitle, songArtists, albumNam
 
   return (
     <View style={styles.songList}>
-      <Text style={styles.index}>{index}</Text>
+      <Pressable style={styles.play}>
+        <Ionicons name="md-play-circle" size={22} color={Themes.colors.spotify} />
+      </Pressable>
       <Image style={styles.albumCover} source={{uri: imageURL}}/>
       <View style={styles.titleArtists}>
         <Text numberOfLines={1} style={styles.songTitle}>{songTitle}</Text>
@@ -35,9 +38,10 @@ const styles = StyleSheet.create({
     paddingBottom: 7,
     paddingLeft: 7
   },
-  index: {
+  play: {
     color: Themes.colors.gray,
-    width: "6%",
+    width: "7%",
+    justifyContent: 'center'
   },
   albumCover: {
     height: undefined,
@@ -59,7 +63,7 @@ const styles = StyleSheet.create({
   },
   albumName: {
     color: Themes.colors.white,
-    width: "27%",
+    width: "26%",
     fontWeight: "600",
     paddingRight: 7
   },

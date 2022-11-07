@@ -3,9 +3,8 @@ import { Themes, Images } from "../assets/Themes";
 import Song from "./song.js"
 
 export default function SongList({tracks}) {
-  const renderSong = ({item, index}) => (
-    <Song 
-      index={index+1}
+  const renderSong = ({item}) => (
+    <Song
       imageURL={item.album.images[0].url}
       songTitle={item.name}
       songArtists={item.artists}
@@ -22,7 +21,7 @@ export default function SongList({tracks}) {
       </View>
       <FlatList
         data={tracks}
-        renderItem={(item, index) => renderSong(item, index)}
+        renderItem={(item) => renderSong(item)}
         keyExtractor={(item) => item.id}
       />
     </View>
